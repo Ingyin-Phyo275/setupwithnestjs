@@ -1,11 +1,7 @@
-import { Body, Controller, Delete, Get, Param, Patch,  } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post,  } from '@nestjs/common';
 import { StudentsService } from './students.service';
+import type { StudentInput } from './student.interface';
 
-type StudentType = {
-  id?: number;
-  name?: string;
-  age?: number;
-}
 
 @Controller('students')
 export class StudentsController {
@@ -81,5 +77,20 @@ async updateStudentById(
     data: updatedStudent
   };
 }
+
+@Post('create')
+async createStudent(@Body() studentData: StudentInput) {
+  try {
+    const newStudent = await this.studentsService.createStudent(studentData);
+    return {
+      status: 201,
+      message: 'Student created successfully',
+      data: newStudent
+    };
+  } catch (error) {
+    throw new Error('Error creating student: ' + error.message);
+  }
+}
+
 }
 
