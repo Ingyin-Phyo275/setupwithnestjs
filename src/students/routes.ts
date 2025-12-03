@@ -7,5 +7,5 @@ const studentService = new StudentsService();
 const studentControllers = new StudentsController(studentService);
 router.get("/students/all", studentControllers?.getAllStudents.bind(studentControllers));
 router.get("/students/:id", studentControllers?.getStudentById.bind(studentControllers));
-
+router.delete("/students/:id", studentControllers?.deleteStudentById.bind(studentControllers));
 export default router;

@@ -1,25 +1,42 @@
 import { Injectable } from '@nestjs/common';
+import { AppDataSource } from '../config/db.config';
+import { Student } from './entities/student.entity';
+import { DeleteResult } from 'typeorm';
 
-export type Student = {
-  id: number;
-  name: string;
-  age: number;
+export type StudentType = {
+  id?: number;
+  name?: string;
+  age?: number;
 };
 
 @Injectable()
 export class StudentsService {
-  private students: Student[] = [
-    { id: 1, name: 'John Doe', age: 20 },
-    { id: 2, name: 'Jane Smith', age: 22 },
-    { id: 3, name: 'Sam Johnson', age: 19 },
-  ];
 
-  getAllStudents(): Student[] {
-    return this.students;
+
+  async getAllStudents(): Promise<StudentType[]> {
+    const students = await AppDataSource.getRepository(Student).find();
+    console.log("all", students)
+    return students;
   }
 
-  getStudentById(id: number) : Student | undefined {
-    const res = this.students.find(student => student.id === id);
+  getStudentById(id: number): Promise<StudentType | null> {
+    {
+      const res = AppDataSource.getRepository(Student).findOneBy({ id });
+      return res;
+    }
+  }
+
+  deleteStudentById(id: number): Promise<DeleteResult> {
+    if(!id) {
+      throw new Error('ID must be provided');
+    }
+    return AppDataSource.getRepository(Student).delete(id);
+  }
+
+  updateStudentById(id: number, studentData: StudentType): Promise<StudentType> {
+    console.log("student data", studentData)
+    const res = AppDataSource.getRepository(Student).save({ id, ...studentData });
     return res;
   }
+
 }
