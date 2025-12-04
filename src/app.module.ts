@@ -7,9 +7,11 @@ import { StudentsController } from './students/students.controller';
 import { UsersModule } from './users/users.module';
 import { UsersController } from './users/users.controller';
 import { UsersService } from './users/users.service';
+import { RolesModule } from './roles/roles.module';
+import { EmployeesModule } from './employees/employees.module';
 
 @Module({
-  imports: [StudentsModule, UsersModule],
+  imports: [StudentsModule, UsersModule, RolesModule, EmployeesModule],
   controllers: [AppController, StudentsController, UsersController],
   providers: [AppService, StudentsService, UsersService],
 })

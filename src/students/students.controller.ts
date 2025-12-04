@@ -10,17 +10,7 @@ export class StudentsController {
  @Get('all')
   async getAllStudents() {
     const students = await this.studentsService.getAllStudents();
-    if(!students) {
-      return {
-        status: 500,
-        message: 'No students found'
-      }
-    }
-    return {
-      status: 200,
-      message: 'Students retrieved successfully',
-      data: students
-    }
+    return students;
   }
 
   @Get(':id')

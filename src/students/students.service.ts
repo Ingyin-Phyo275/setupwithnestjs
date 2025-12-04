@@ -9,11 +9,24 @@ import { StudentInput } from './student.interface';
 export class StudentsService {
 
 
-  async getAllStudents(): Promise<StudentInput[]> {
-    const students = await AppDataSource.getRepository(Student).find();
-    console.log("all", students)
-    return students;
-  }
+async getAllStudents(): Promise<{
+  status: number;
+  message: string;
+  data: StudentInput[];
+  count: number;
+}> {
+  const [data, count] = await AppDataSource
+    .getRepository(Student)
+    .findAndCount();
+
+  return {
+    status: 200,
+    message: 'Students retrieved successfully',
+    data,
+    count
+  };
+}
+
 
   async getStudentById(id: number): Promise<StudentInput | null> {
     {

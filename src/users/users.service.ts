@@ -23,13 +23,14 @@ export class UsersService {
   }
 
   async findAll() {
-    const res = await AppDataSource.getRepository('User').find();
-
+    const res = await AppDataSource.getRepository('User').findAndCount();
+    const [data, count] = res;
     if (res.length > 0) {
       return {
         status: 200,
         message: 'Users retrieved successfully',
-        data: res,
+        data: data,
+        count: count,
       };
     } else {
       return {

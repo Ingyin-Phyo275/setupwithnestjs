@@ -1,6 +1,8 @@
 import { DataSource } from "typeorm";
 import { Student } from "../students/entities/student.entity";
 import { User } from "../users/entities/user.entity";
+import { Role } from "../roles/entities/role.entity";
+import { Employee } from "../employees/entities/employee.entity";
 
 export const AppDataSource = new DataSource({
     type: (process.env.TYPE as any) || "postgres",
@@ -11,7 +13,7 @@ export const AppDataSource = new DataSource({
     database: process.env.DB_NAME || "test_db",
     synchronize: true,
     logging: true,
-    entities: [Student, User],
+    entities: [Student, User, Role,Employee],
     subscribers: [],
     migrations: [],
 })
