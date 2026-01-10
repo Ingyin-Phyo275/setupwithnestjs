@@ -1,19 +1,18 @@
 import { DataSource } from "typeorm";
-import { Student } from "../students/entities/student.entity";
-import { User } from "../users/entities/user.entity";
-import { Role } from "../roles/entities/role.entity";
-import { Employee } from "../employees/entities/employee.entity";
+import { Question } from "../questions/entities/question.entity";
+import { Result } from "../results/entities/result.entity";
+
 
 export const AppDataSource = new DataSource({
     type: (process.env.TYPE as any) || "postgres",
-    host: process.env.HOST || "localhost",
+    host: process.env.HOST || "aws-1-ap-south-1.pooler.supabase.com",
     port: Number(process.env.DB_PORT) || 5432,
-    username: process.env.DB_USER || "postgres",
-    password: process.env.DB_PASS || "root",
-    database: process.env.DB_NAME || "test_db",
+    username: process.env.DB_USER || "postgres.pehryytrnjhhpxrzmzil",
+    password: process.env.DB_PASS || "IngyinPhyo2752001",
+    database: process.env.DB_NAME || "postgres",
     synchronize: true,
     logging: true,
-    entities: [Student, User, Role,Employee],
+    entities: [Question, Result],
     subscribers: [],
     migrations: [],
 })
