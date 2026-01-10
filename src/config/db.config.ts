@@ -1,15 +1,15 @@
 import { DataSource } from "typeorm";
 import { Question } from "../questions/entities/question.entity";
 import { Result } from "../results/entities/result.entity";
-
+import 'dotenv/config';
 
 export const AppDataSource = new DataSource({
-    type: (process.env.TYPE as any) || "postgres",
-    host: process.env.HOST || "aws-1-ap-south-1.pooler.supabase.com",
-    port: Number(process.env.DB_PORT) || 5432,
-    username: process.env.DB_USER || "postgres.pehryytrnjhhpxrzmzil",
-    password: process.env.DB_PASS || "IngyinPhyo2752001",
-    database: process.env.DB_NAME || "postgres",
+    type: (process.env.TYPE as any) ,
+    host: process.env.HOST ,
+    port: Number(process.env.DB_PORT) ,
+    username: process.env.DB_USER ,
+    password: process.env.DB_PASS ,
+    database: process.env.DB_NAME ,
     synchronize: true,
     logging: true,
     entities: [Question, Result],
