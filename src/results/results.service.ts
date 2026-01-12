@@ -10,19 +10,20 @@ export class ResultsService {
      const res = await AppDataSource.getRepository(Result).save(createResultDto);
         return {
           statusCode: 201,
-          message: 'Question created successfully',
+          message: 'Results created successfully',
           data: res
         };
   }
 
  async  findAll() {
     const res = await AppDataSource.getRepository(Result).findAndCount();
-        const [questions, count] = res;
+        const [results, count] = res;
         if( count === 0 ) return new Error('No questions found');
+        console.log("response data", results)
         return {
           statusCode: 200,
           message: 'Results fetched successfully',
-          data: questions,
+          data: results,
           count: count
         }
   }

@@ -16,6 +16,12 @@ async function bootstrap() {
       console.log(`🚀 Server is running on http://localhost:${process.env.PORT}`);
     });
 
+      app.enableCors({
+    origin: '*', // allows all origins
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+    allowedHeaders: '*', // allows all headers
+  });
+
   })
   .catch((error) => {
     console.error('❌ Failed to connect to the database:', error);

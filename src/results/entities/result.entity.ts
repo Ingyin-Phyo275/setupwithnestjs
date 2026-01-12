@@ -14,4 +14,7 @@ export class Result {
   @Column({ nullable: true })
   link: string;
 
+  @Column({ nullable: true })
+  class: string;
+
 }

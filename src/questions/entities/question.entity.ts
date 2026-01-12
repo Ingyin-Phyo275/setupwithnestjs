@@ -16,4 +16,7 @@ export class Question {
 
   @Column({ nullable: true })
   image: string;
+
+  @Column({ nullable: true })
+  class: string;
 }
