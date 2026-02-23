@@ -19,4 +19,7 @@ export class Question {
 
   @Column({ nullable: true })
   class: string;
+
+  @Column({ nullable: true })
+  subject: string;
 }

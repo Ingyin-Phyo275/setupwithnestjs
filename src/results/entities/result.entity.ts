@@ -17,4 +17,7 @@ export class Result {
   @Column({ nullable: true })
   class: string;
 
+  @Column({ nullable: true, default: 'Chemistry'})
+  subject: string;
+
 }
