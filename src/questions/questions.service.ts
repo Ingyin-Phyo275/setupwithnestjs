@@ -16,7 +16,11 @@ export class QuestionsService {
   }
 
   async findAll() {
-    const res = await AppDataSource.getRepository(Question).findAndCount();
+    const res = await AppDataSource.getRepository(Question).findAndCount({
+      order: {
+        id: 'ASC'
+      }
+    });
     const [questions, count] = res;
     if( count === 0 ) throw new Error('No questions found');
     return {
@@ -27,15 +31,53 @@ export class QuestionsService {
     }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} question`;
+  async findOne(id: number) {
+    try {
+      const res = await AppDataSource.getRepository(Question).findOneBy({ id: id });
+      if(!res){
+        throw new Error('Question not found');
+      }
+      return {
+        statusCode: 200,
+        message: 'Question fetched successfully',
+        data: res
+      }
+    } catch (error) {
+      throw new Error(error.message);
+    }
   }
 
-  update(id: number, updateQuestionDto: UpdateQuestionDto) {
-    return `This action updates a #${id} question`;
+  async update(id: number, updateQuestionDto: UpdateQuestionDto) {
+    try {
+      const res = await this.findOne(id);
+      if (!res) {
+        throw new Error('Question not found');
+      }
+      const data = await AppDataSource.getRepository(Question).update({ id: id }, updateQuestionDto);
+      return {
+        statusCode: 200,
+        message: 'Question updated successfully',
+        data: data
+      }
+    } catch (error) {
+      throw new Error(error.message);
+    }
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} question`;
+  async remove(id: number) {
+    try {
+      const res = await this.findOne(id);
+      if (!res) {
+        throw new Error('Question not found');
+      }
+      const data = await AppDataSource.getRepository(Question).delete({ id: id });
+      return {
+        statusCode: 200,
+        message: 'Question deleted successfully',
+        data: data
+      }
+    } catch (error) {
+      throw new Error(error.message);
+    }
   }
 }

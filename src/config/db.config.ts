@@ -2,6 +2,7 @@ import { DataSource } from 'typeorm';
 import { Question } from '../questions/entities/question.entity';
 import { Result } from '../results/entities/result.entity';
 import 'dotenv/config';
+import { Auth } from '../auth/entities/auth.entity';
 
 const databaseUrl = process.env.DATABASE_URL;
 
@@ -15,7 +16,7 @@ export const AppDataSource = new DataSource({
   url: databaseUrl,
   synchronize: true, // auto-sync tables in dev/prod (disable in production for safety)
   logging: true,
-  entities: [Question, Result],
+  entities: [Question, Result, Auth],
   subscribers: [],
   migrations: [],
 });
