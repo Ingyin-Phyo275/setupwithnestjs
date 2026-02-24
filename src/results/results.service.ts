@@ -16,7 +16,11 @@ export class ResultsService {
   }
 
  async  findAll() {
-    const res = await AppDataSource.getRepository(Result).findAndCount();
+    const res = await AppDataSource.getRepository(Result).findAndCount({
+      order: {
+        id: 'ASC'
+      }
+    });
         const [results, count] = res;
         if( count === 0 ) return new Error('No questions found');
         console.log("response data", results)
@@ -28,15 +32,53 @@ export class ResultsService {
         }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} result`;
+  async findOne(id: number) {
+    try {
+      const response = await AppDataSource.getRepository(Result).findOneBy({ id: id });
+      if(!response){
+        throw new Error('Result not found');
+      }
+      return {
+        statusCode: 200,
+        message: 'Result fetched successfully',
+        data: response
+      }
+    } catch (error) {
+      throw new Error(error.message);
+    }
   }
 
-  update(id: number, updateResultDto: UpdateResultDto) {
-    return `This action updates a #${id} result`;
+  async update(id: number, updateResultDto: UpdateResultDto) {
+    try {
+      const response = await this.findOne(id);
+      if (!response) {
+        throw new Error('Result not found');
+      }
+      const data = await AppDataSource.getRepository(Result).update({ id: id }, updateResultDto);
+      return {
+        statusCode: 200,
+        message: 'Result updated successfully',
+        data: data
+      }
+    } catch (error) {
+      throw new Error(error.message);
+    }
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} result`;
+  async remove(id: number) {
+    try {
+      const response = await this.findOne(id);
+      if (!response) {
+        throw new Error('Result not found');
+      }
+      const data = await AppDataSource.getRepository(Result).delete({ id: id });
+      return {
+        statusCode: 200,
+        message: 'Result deleted successfully',
+        data: data
+      }
+    } catch (error) {
+      throw new Error(error.message);
+    }
   }
 }
