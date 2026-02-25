@@ -22,4 +22,7 @@ export class Student {
 
     @Column({ type: 'varchar' })
     major: string
+
+    @Column({ type: 'varchar', nullable: true })
+    gender: string
 }

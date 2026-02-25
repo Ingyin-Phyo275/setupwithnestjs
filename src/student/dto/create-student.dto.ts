@@ -1,7 +1,7 @@
 import { IsNotEmpty, IsOptional, IsString, MaxLength, min, MinLength } from "class-validator";
 
 export class CreateStudentDto {
-    
+
     @IsNotEmpty()
     @IsString({ message: 'Name must be a string' })
     @MinLength(5, { message: 'Name must be at least 5 characters long' })
@@ -30,4 +30,8 @@ export class CreateStudentDto {
     @IsNotEmpty()
     @IsString()
     major: string
+
+    @IsNotEmpty()
+    @IsString()
+    gender: string
 }
